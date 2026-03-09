@@ -11,7 +11,7 @@ public class RegistrationTest {
     WebDriver driver;
 
     @ParameterizedTest
-    @ValueSource(strings = {"chrome"})//, "yandex"})
+    @ValueSource(strings = {"chrome", "yandex"})
     public void successfulRegistration(String browser) {
         WebDriverFactory factory = new WebDriverFactory();
         driver = factory.getWebDriver(browser);
@@ -23,7 +23,7 @@ public class RegistrationTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"chrome"})//, "yandex"})
+    @ValueSource(strings = {"chrome", "yandex"})
     public void shortPasswordError(String browser) {
         WebDriverFactory factory = new WebDriverFactory();
         driver = factory.getWebDriver(browser);

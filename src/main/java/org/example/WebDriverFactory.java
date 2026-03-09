@@ -10,11 +10,15 @@ public class WebDriverFactory {
         WebDriverManager.chromedriver().setup();
         switch (browserName.toLowerCase()) {
                         case "chrome":
-                return new ChromeDriver();
+                            io.github.bonigarcia.wdm.WebDriverManager.chromedriver().setup();
+                            return new org.openqa.selenium.chrome.ChromeDriver();
             case "yandex":
-                ChromeOptions options = new ChromeOptions();
+                io.github.bonigarcia.wdm.WebDriverManager.chromedriver().browserVersion("142").setup();
+                org.openqa.selenium.chrome.ChromeOptions options = new org.openqa.selenium.chrome.ChromeOptions();
                 options.setBinary("C:/Program Files/Yandex/YandexBrowser/Application/browser.exe");
-                return new ChromeDriver(options);
+                options.addArguments("--remote-allow-origins=*");
+
+                return new org.openqa.selenium.chrome.ChromeDriver(options);
             default:
                 throw new RuntimeException("Браузер " + browserName + " не поддерживается");
         }
