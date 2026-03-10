@@ -12,6 +12,12 @@ public class LoginPage {
     private final By emailField = By.xpath(".//input[@name='name']");
     private final By passwordField = By.xpath(".//input[@name='Пароль']");
     private final By loginButton = By.xpath(".//button[text()='Войти']");
+    private final By recoverPassword = By.xpath(".//a[text()='Восстановить пароль']");
+
+
+    public void clickRecoverPassword() {
+        driver.findElement(recoverPassword).click();
+    }
     public LoginPage(WebDriver driver) {
         this.driver = driver;
     }

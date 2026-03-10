@@ -32,4 +32,5 @@ public void register(String name, String email, String password){
     public boolean passwordErrorMessage() {
         return driver.findElement(passwordNotCorrect).isDisplayed();
     }
+
 }
