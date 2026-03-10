@@ -8,7 +8,7 @@ public class HomePage {
     // Кнопка "Войти в аккаунт"
     private final By loginButtonMain = By.xpath(".//button[text()='Войти в аккаунт']");
     // Кнопка "Личный кабинет"
-    private final By accountButton = By.xpath(".//p[text()='Личный кабинет']");
+    private final By personalAccountButton = By.xpath(".//p[text()='Личный Кабинет']");
 
 
     public HomePage(WebDriver driver) {
@@ -18,7 +18,8 @@ public class HomePage {
     public void clickLoginButton() {
         driver.findElement(loginButtonMain).click();
     }
-    public void clickAccountButton() {
-        driver.findElement(accountButton).click();
+
+    public void clickPersonalAccountButton() {
+        driver.findElement(personalAccountButton).click();
     }
 }
