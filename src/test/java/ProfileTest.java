@@ -3,6 +3,7 @@ import PageObject.LoginPage;
 import PageObject.ProfilePage;
 import PageObject.RegisterPage;
 import org.example.WebDriverFactory;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.openqa.selenium.By;
@@ -92,4 +93,9 @@ public class ProfileTest {
 
         assertTrue(isOpenButton, "не удалось выйти из личного кабинета!");
     }
+    @AfterEach
+    public void tearDown() {
+        if (driver != null) {
+            driver.quit();
+        }}
 }

@@ -2,6 +2,7 @@ import PageObject.HomePage;
 import PageObject.LoginPage;
 import PageObject.RegisterPage;
 import org.example.WebDriverFactory;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.openqa.selenium.By;
@@ -103,5 +104,9 @@ public class LoginTest {
         new WebDriverWait(driver, Duration.ofSeconds(10))
                 .until(ExpectedConditions.visibilityOfElementLocated(By.xpath(".//button[text()='Оформить заказ']")));
     }
-
+    @AfterEach
+    public void tearDown() {
+        if (driver != null) {
+            driver.quit();
+        }}
 }

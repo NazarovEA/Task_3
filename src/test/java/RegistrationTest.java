@@ -1,5 +1,6 @@
 import PageObject.RegisterPage;
 import org.example.WebDriverFactory;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -33,4 +34,9 @@ public class RegistrationTest {
         registerPage.register("Evgeny2", "Evgen2@ya.ru", "01234");
         assertTrue(registerPage.passwordErrorMessage());
     }
+    @AfterEach
+    public void tearDown() {
+        if (driver != null) {
+            driver.quit();
+        }}
 }
