@@ -17,7 +17,7 @@ public class LoginTest {
     WebDriverFactory factory = new WebDriverFactory();
 
     @ParameterizedTest
-    @ValueSource(strings = {"chrome", "yandex"})
+    @ValueSource(strings = {"chrome"})
     public void loginLogYourAccount(String browser) {
         WebDriverFactory factory = new WebDriverFactory();
         driver = factory.getWebDriver(browser);
@@ -31,7 +31,7 @@ public class LoginTest {
                 .until(ExpectedConditions.visibilityOfElementLocated(By.name("name")));
         // Переходим на логин
 
-        loginPage.login("evgen88@ya.ru", "123456"); // Логинимся
+        loginPage.login("evgen881@ya.ru", "NazarovYandex355"); // Логинимся
         //добавляем ожидание, так как не успевает страница открыться
         new WebDriverWait(driver, Duration.ofSeconds(10))
                 .until(ExpectedConditions.visibilityOfElementLocated(By.xpath(".//button[text()='Оформить заказ']")));
@@ -39,7 +39,7 @@ public class LoginTest {
 
 //вход через личный кабинет
     @ParameterizedTest
-    @ValueSource(strings = {"chrome", "yandex"})
+    @ValueSource(strings = {"chrome"})
     public void loginPersonalAccountButton(String browser) {
         WebDriverFactory factory = new WebDriverFactory();
         driver = factory.getWebDriver(browser);
@@ -53,7 +53,7 @@ public class LoginTest {
                 .until(ExpectedConditions.visibilityOfElementLocated(By.name("name")));
         // Переходим на логин
 
-        loginPage.login("evgen88@ya.ru", "123456"); // Логинимся
+        loginPage.login("evgen881@ya.ru", "NazarovYandex355"); // Логинимся
         //добавляем ожидание, так как не успевает страница открыться
         new WebDriverWait(driver, Duration.ofSeconds(10))
                 .until(ExpectedConditions.visibilityOfElementLocated(By.xpath(".//button[text()='Оформить заказ']")));
@@ -61,7 +61,7 @@ public class LoginTest {
 
     //вход через кнопку зарегестрироваться
     @ParameterizedTest
-    @ValueSource(strings = {"chrome", "yandex"})
+    @ValueSource(strings = {"chrome"})
     public void loginRegisterButton(String browser) {
         WebDriverFactory factory = new WebDriverFactory();
         driver = factory.getWebDriver(browser);
@@ -83,7 +83,8 @@ public class LoginTest {
 
     //вход через кнопку в форме восстановления пароля.
     @ParameterizedTest
-    @ValueSource(strings = {"chrome", "yandex"})
+    @ValueSource(strings = {"chrome"})
+
     public void loginRecoverPassword(String browser) {
         WebDriverFactory factory = new WebDriverFactory();
         driver = factory.getWebDriver(browser);

@@ -2,6 +2,10 @@ package PageObject;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
 
 public class ProfilePage {
     private WebDriver driver;
@@ -9,7 +13,7 @@ public class ProfilePage {
     // Кнопка "Конструктор"
     private final By constructorButton = By.xpath(".//p[text()='Конструктор']");
     // Кнопка "Выйти из аккаунта"
-    private final By outAccountButton = By.xpath(".//button[text()='Выход']");
+    private final By outAccountButton = By.xpath(".//*[text()='Выход']");
 
     public ProfilePage(WebDriver driver) {
         this.driver = driver;
@@ -20,6 +24,8 @@ public class ProfilePage {
     }
 
     public void clickOutAccountButton() {
-        driver.findElement(outAccountButton).click();
+        new WebDriverWait(driver, Duration.ofSeconds(10))
+                .until(ExpectedConditions.elementToBeClickable(outAccountButton))
+                .click();
     }
 }

@@ -19,7 +19,7 @@ public class ProfileTest {
     WebDriverFactory factory = new WebDriverFactory();
 
     @ParameterizedTest
-    @ValueSource(strings = {"yandex"})
+    @ValueSource(strings = {"chrome"})
     public void inConstructor(String browser) {
         WebDriverFactory factory = new WebDriverFactory();
         driver = factory.getWebDriver(browser);
@@ -33,7 +33,7 @@ public class ProfileTest {
                 .until(ExpectedConditions.visibilityOfElementLocated(By.name("name")));
         // Переходим на логин
 
-        loginPage.login("evgen88@ya.ru", "123456"); // Логинимся
+        loginPage.login("evgen881@ya.ru", "NazarovYandex355"); // Логинимся
 
         new HomePage(driver).clickPersonalAccountButton();
         new ProfilePage(driver).clickConstructorButton();
@@ -43,7 +43,7 @@ public class ProfileTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"yandex"})
+    @ValueSource(strings = {"chrome"})
     public void inLogo(String browser) {
         WebDriverFactory factory = new WebDriverFactory();
         driver = factory.getWebDriver(browser);
@@ -57,7 +57,7 @@ public class ProfileTest {
                 .until(ExpectedConditions.visibilityOfElementLocated(By.name("name")));
         // Переходим на логин
 
-        loginPage.login("evgen88@ya.ru", "123456"); // Логинимся
+        loginPage.login("evgen881@ya.ru", "NazarovYandex355"); // Логинимся
 
         new HomePage(driver).clickPersonalAccountButton();
         new HomePage(driver).clickLogo();
@@ -67,7 +67,7 @@ public class ProfileTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"yandex"})
+    @ValueSource(strings = {"chrome"})
     public void outAccount(String browser) {
         WebDriverFactory factory = new WebDriverFactory();
         driver = factory.getWebDriver(browser);
@@ -81,10 +81,10 @@ public class ProfileTest {
                 .until(ExpectedConditions.visibilityOfElementLocated(By.name("name")));
         // Переходим на логин
 
-        loginPage.login("evgen88@ya.ru", "123456"); // Логинимся
+        loginPage.login("evgen881@ya.ru", "NazarovYandex355"); // Логинимся
 
         new HomePage(driver).clickPersonalAccountButton();
-       new ProfilePage(driver).clickOutAccountButton();
+        new ProfilePage(driver).clickOutAccountButton();
 
         boolean isOpenButton = new WebDriverWait(driver, Duration.ofSeconds(10))
                 .until(ExpectedConditions.visibilityOfElementLocated(By.xpath(".//button[text()='Войти']")))
