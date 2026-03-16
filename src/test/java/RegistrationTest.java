@@ -1,5 +1,10 @@
+import io.restassured.http.ContentType;
+import io.restassured.response.Response;
+import org.example.User;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import pageObject.HomePage;
 import pageObject.LoginPage;
 import pageObject.RegisterPage;
 import org.example.WebDriverFactory;
@@ -13,16 +18,30 @@ public class RegistrationTest {
     WebDriver driver;
     private String accessToken;
 
-    @Test
-    @DisplayName("Успешная регистрация")
-    public void successfulRegistration() {
+private User user;
+    @BeforeEach
+    public void setUp(){
+        user = new User("Evgeny", "evgen" + System.currentTimeMillis() + "@ya.ru", "012345");
         String browser = System.getProperty("browser", "chrome");
         WebDriverFactory factory = new WebDriverFactory();
         driver = factory.getWebDriver(browser);
+    }
+
+    @Test
+    @DisplayName("Успешная регистрация")
+    public void successfulRegistration() {
         driver.get(RegisterPage.BASE_URL);
 
         RegisterPage registerPage = new RegisterPage(driver);
-        registerPage.register("Evgeny", "email" + System.currentTimeMillis() + "@mail.ru", "012345");
+        registerPage.register("Evgeny", user.getEmail(), user.getPassword());
+
+        Response response = given()
+                .log().all()
+                .header("Content-type", "application/json")
+                .contentType(ContentType.JSON)
+                .body(user)
+                .post("https://stellarburgers.education-services.ru/api/auth/login");
+        accessToken = response.path("accessToken");
 
         LoginPage loginPage = new LoginPage(driver);
         assertTrue(loginPage.isLoginButtonDisplayed(), "После регистрации не открылась страница входа!");
@@ -42,19 +61,19 @@ public class RegistrationTest {
     }
     @AfterEach
     public void tearDown() {
-        // Если токен был получен, удаляем юзера через API
+        // Удаляем пользователя только если есть токен
         if (accessToken != null) {
             given()
                     .header("Authorization", accessToken)
                     .when()
-                    .delete("https://education-services.ru")
+                    .delete("https://stellarburgers.education-services.ru/api/auth/user")
                     .then()
-                    .statusCode(202); // Обычно 202 Accepted или 200 OK
+                    .statusCode(202);
         }
 
         if (driver != null) {
             driver.quit();
         }
-    }
+        }
 }
 
