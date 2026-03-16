@@ -1,9 +1,9 @@
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import pageObject.LoginPage;
 import pageObject.RegisterPage;
 import org.example.WebDriverFactory;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
 import org.openqa.selenium.WebDriver;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -11,23 +11,25 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class RegistrationTest {
     WebDriver driver;
 
-    @ParameterizedTest
+    @Test
     @DisplayName("Успешная регистрация")
-    @ValueSource(strings = {"chrome"})
-    public void successfulRegistration(String browser) {
+    public void successfulRegistration() {
+        String browser = System.getProperty("browser", "chrome");
         WebDriverFactory factory = new WebDriverFactory();
         driver = factory.getWebDriver(browser);
-        driver.get("https://stellarburgers.education-services.ru/register");
+        driver.get(RegisterPage.BASE_URL);
 
         RegisterPage registerPage = new RegisterPage(driver);
         registerPage.register("Evgeny", "email" + System.currentTimeMillis() + "@mail.ru", "012345");
 
+        LoginPage loginPage = new LoginPage(driver);
+        assertTrue(loginPage.isLoginButtonDisplayed(), "После регистрации не открылась страница входа!");
     }
 
-    @ParameterizedTest
+    @Test
     @DisplayName("Ошибка для некорректного пароля.")
-    @ValueSource(strings = {"chrome"})
-    public void shortPasswordError(String browser) {
+    public void shortPasswordError() {
+        String browser = System.getProperty("browser", "chrome");
         WebDriverFactory factory = new WebDriverFactory();
         driver = factory.getWebDriver(browser);
         driver.get(RegisterPage.BASE_URL);

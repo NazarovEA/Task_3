@@ -1,11 +1,10 @@
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import pageObject.HomePage;
 import pageObject.LoginPage;
 import pageObject.ProfilePage;
 import org.example.WebDriverFactory;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -19,20 +18,19 @@ public class ProfileTest {
     WebDriver driver;
     WebDriverFactory factory = new WebDriverFactory();
 
-    @ParameterizedTest
+    @Test
     @DisplayName("Переход в конструктор из ЛК через кнопку Конструктор")
-    @ValueSource(strings = {"chrome"})
-    public void inConstructor(String browser) {
+    public void inConstructor() {
+        String browser = System.getProperty("browser", "chrome");
         WebDriverFactory factory = new WebDriverFactory();
         driver = factory.getWebDriver(browser);
-        driver.get("https://stellarburgers.education-services.ru");
+        driver.get(HomePage.BASE_URL);
 
 // После открытия главной страницы, заходим и вносим имя и пароль
         new HomePage(driver).clickLoginButton();
-
+        HomePage homePage = new HomePage(driver);
         LoginPage loginPage = new LoginPage(driver);
-        new WebDriverWait(driver, Duration.ofSeconds(10))
-                .until(ExpectedConditions.visibilityOfElementLocated(By.name("name")));
+        loginPage.waitForLoad();
         // Переходим на логин
 
         loginPage.login("evgen881@ya.ru", "NazarovYandex355"); // Логинимся
@@ -40,14 +38,13 @@ public class ProfileTest {
         new HomePage(driver).clickPersonalAccountButton();
         new ProfilePage(driver).clickConstructorButton();
 
-        new WebDriverWait(driver, Duration.ofSeconds(10))
-                .until(ExpectedConditions.visibilityOfElementLocated(By.xpath(".//button[text()='Оформить заказ']")));
+        assertTrue(homePage.isOrderButtonDisplayed(), "Не удалось перейти в конструктор!");
     }
 
-    @ParameterizedTest
+    @Test
     @DisplayName("Переход в конструктор из ЛК через логотип")
-    @ValueSource(strings = {"chrome"})
-    public void inLogo(String browser) {
+    public void inLogo() {
+        String browser = System.getProperty("browser", "chrome");
         WebDriverFactory factory = new WebDriverFactory();
         driver = factory.getWebDriver(browser);
         driver.get(HomePage.BASE_URL);
@@ -55,34 +52,29 @@ public class ProfileTest {
 // После открытия главной страницы, заходим и вносим имя и пароль
         new HomePage(driver).clickLoginButton();
 
+        HomePage homePage = new HomePage(driver);
         LoginPage loginPage = new LoginPage(driver);
-        new WebDriverWait(driver, Duration.ofSeconds(10))
-                .until(ExpectedConditions.visibilityOfElementLocated(By.name("name")));
+        loginPage.waitForLoad();
         // Переходим на логин
-
         loginPage.login("evgen881@ya.ru", "NazarovYandex355"); // Логинимся
 
         new HomePage(driver).clickPersonalAccountButton();
         new HomePage(driver).clickLogo();
-
-        new WebDriverWait(driver, Duration.ofSeconds(10))
-                .until(ExpectedConditions.visibilityOfElementLocated(By.xpath(".//button[text()='Оформить заказ']")));
+        assertTrue(homePage.isOrderButtonDisplayed(), "Не удалось перейти в конструктор!");
     }
 
-    @ParameterizedTest
+    @Test
     @DisplayName("Выход из личного кабинета")
-    @ValueSource(strings = {"chrome"})
-    public void outAccount(String browser) {
+    public void outAccount() {
+        String browser = System.getProperty("browser", "chrome");
         WebDriverFactory factory = new WebDriverFactory();
         driver = factory.getWebDriver(browser);
         driver.get(HomePage.BASE_URL);
 
 // После открытия главной страницы, заходим и вносим имя и пароль
         new HomePage(driver).clickLoginButton();
-
+        HomePage homePage = new HomePage(driver);
         LoginPage loginPage = new LoginPage(driver);
-        new WebDriverWait(driver, Duration.ofSeconds(10))
-                .until(ExpectedConditions.visibilityOfElementLocated(By.name("name")));
         // Переходим на логин
 
         loginPage.login("evgen881@ya.ru", "NazarovYandex355"); // Логинимся
@@ -90,11 +82,9 @@ public class ProfileTest {
         new HomePage(driver).clickPersonalAccountButton();
         new ProfilePage(driver).clickOutAccountButton();
 
-        boolean isOpenButton = new WebDriverWait(driver, Duration.ofSeconds(10))
-                .until(ExpectedConditions.visibilityOfElementLocated(By.xpath(".//button[text()='Войти']")))
-                .isDisplayed();
+        boolean isLoggedOut = loginPage.isLoginButtonDisplayed();
 
-        assertTrue(isOpenButton, "не удалось выйти из личного кабинета!");
+        assertTrue(isLoggedOut, "После выхода не открылась страница входа!");
     }
     @AfterEach
     public void tearDown() {

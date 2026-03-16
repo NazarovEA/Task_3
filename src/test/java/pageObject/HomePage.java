@@ -1,6 +1,8 @@
 package pageObject;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -23,7 +25,24 @@ private final By logo = By.xpath(".//header//a[@href='/']");
     private final By constructorButton = By.xpath(".//p[text()='Конструктор']");
 // булки кнопка
 private final By buns = By.xpath(".//span[text()='Булки']/parent::div");
-
+//кнопка оформить заказ
+private final By orderButton = By.xpath(".//button[text()='Оформить заказ']");
+    public void waitForOrderButton() {
+        new WebDriverWait(driver, Duration.ofSeconds(10))
+                .until(ExpectedConditions.visibilityOfElementLocated(orderButton));
+    }
+    @Step("Проверить, отображается ли кнопка 'Оформить заказ'")
+    public boolean isOrderButtonDisplayed() {
+        try {
+            // Ждем появления кнопки 10 секунд
+            return new WebDriverWait(driver, Duration.ofSeconds(10))
+                    .until(ExpectedConditions.visibilityOfElementLocated(orderButton))
+                    .isDisplayed();
+        } catch (TimeoutException e) {
+            // Если кнопка не появилась — возвращаем false вместо падения теста
+            return false;
+        }
+    }
     // соусы кнопка
     private final By sauces = By.xpath(".//span[text()='Соусы']/parent::div");
     // начинки кнопка
