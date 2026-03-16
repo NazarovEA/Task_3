@@ -1,3 +1,4 @@
+import org.junit.jupiter.api.DisplayName;
 import pageObject.HomePage;
 import pageObject.LoginPage;
 import org.example.WebDriverFactory;
@@ -17,6 +18,7 @@ public class HomeTest {
     WebDriver driver;
 
     @ParameterizedTest
+    @DisplayName("Переход к начинкам")
     @ValueSource(strings = {"chrome"})
     public void fillingsOpen(String browser) {
         WebDriverFactory factory = new WebDriverFactory();
@@ -50,6 +52,7 @@ public class HomeTest {
         }}
 
     @ParameterizedTest
+    @DisplayName("Переход к соусам")
     @ValueSource(strings = {"chrome"})
     public void sausesOpen(String browser) {
         WebDriverFactory factory = new WebDriverFactory();
@@ -72,16 +75,12 @@ public class HomeTest {
         //new HomePage(driver).clickBuns();
         new HomePage(driver).clickSauces();
         HomePage homePage = new HomePage(driver);
-        assertTrue(homePage.saucesTabActive(), "Вкладка 'Начинки' не стала активной после клика!");
+        assertTrue(homePage.saucesTabActive(), "Вкладка 'соусы' не стала активной после клика!");
 
     }
-    @AfterEach
-    public void tearDown2() {
-        if (driver != null) {
-            driver.quit();
-        }}
 
     @ParameterizedTest
+    @DisplayName("Переход к булкам")
     @ValueSource(strings = {"chrome"})
     public void bunsOpen(String browser) {
         WebDriverFactory factory = new WebDriverFactory();
@@ -104,7 +103,7 @@ public class HomeTest {
 
         new HomePage(driver).clickBuns();
         HomePage homePage = new HomePage(driver);
-        assertTrue(homePage.bunsTabActive(), "Вкладка 'Начинки' не стала активной после клика!");
+        assertTrue(homePage.bunsTabActive(), "Вкладка 'булки' не стала активной после клика!");
     }
 
 

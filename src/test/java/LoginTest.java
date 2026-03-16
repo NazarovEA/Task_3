@@ -1,3 +1,4 @@
+import org.junit.jupiter.api.DisplayName;
 import pageObject.HomePage;
 import pageObject.LoginPage;
 import pageObject.RegisterPage;
@@ -18,6 +19,7 @@ public class LoginTest {
     WebDriverFactory factory = new WebDriverFactory();
 
     @ParameterizedTest
+    @DisplayName("вход по кнопке «Войти в аккаунт» на главной")
     @ValueSource(strings = {"chrome"})
     public void loginLogYourAccount(String browser) {
         WebDriverFactory factory = new WebDriverFactory();
@@ -38,8 +40,9 @@ public class LoginTest {
                 .until(ExpectedConditions.visibilityOfElementLocated(By.xpath(".//button[text()='Оформить заказ']")));
     }
 
-//вход через личный кабинет
+
     @ParameterizedTest
+    @DisplayName("вход через личный кабинет")
     @ValueSource(strings = {"chrome"})
     public void loginPersonalAccountButton(String browser) {
         WebDriverFactory factory = new WebDriverFactory();
@@ -60,8 +63,8 @@ public class LoginTest {
                 .until(ExpectedConditions.visibilityOfElementLocated(By.xpath(".//button[text()='Оформить заказ']")));
     }
 
-    //вход через кнопку зарегестрироваться
     @ParameterizedTest
+    @DisplayName("вход через кнопку зарегестрироваться")
     @ValueSource(strings = {"chrome"})
     public void loginRegisterButton(String browser) {
         WebDriverFactory factory = new WebDriverFactory();
@@ -82,8 +85,8 @@ public class LoginTest {
                 .until(ExpectedConditions.visibilityOfElementLocated(By.xpath(".//button[text()='Оформить заказ']")));
     }
 
-    //вход через кнопку в форме восстановления пароля.
     @ParameterizedTest
+    @DisplayName("вход через кнопку в форме восстановления пароля")
     @ValueSource(strings = {"chrome"})
 
     public void loginRecoverPassword(String browser) {

@@ -1,3 +1,4 @@
+import org.junit.jupiter.api.DisplayName;
 import pageObject.RegisterPage;
 import org.example.WebDriverFactory;
 import org.junit.jupiter.api.AfterEach;
@@ -11,6 +12,7 @@ public class RegistrationTest {
     WebDriver driver;
 
     @ParameterizedTest
+    @DisplayName("Успешная регистрация")
     @ValueSource(strings = {"chrome"})
     public void successfulRegistration(String browser) {
         WebDriverFactory factory = new WebDriverFactory();
@@ -23,6 +25,7 @@ public class RegistrationTest {
     }
 
     @ParameterizedTest
+    @DisplayName("Ошибка для некорректного пароля.")
     @ValueSource(strings = {"chrome"})
     public void shortPasswordError(String browser) {
         WebDriverFactory factory = new WebDriverFactory();

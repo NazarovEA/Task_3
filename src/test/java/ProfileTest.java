@@ -1,3 +1,4 @@
+import org.junit.jupiter.api.DisplayName;
 import pageObject.HomePage;
 import pageObject.LoginPage;
 import pageObject.ProfilePage;
@@ -19,6 +20,7 @@ public class ProfileTest {
     WebDriverFactory factory = new WebDriverFactory();
 
     @ParameterizedTest
+    @DisplayName("Переход в конструктор из ЛК через кнопку Конструктор")
     @ValueSource(strings = {"chrome"})
     public void inConstructor(String browser) {
         WebDriverFactory factory = new WebDriverFactory();
@@ -43,6 +45,7 @@ public class ProfileTest {
     }
 
     @ParameterizedTest
+    @DisplayName("Переход в конструктор из ЛК через логотип")
     @ValueSource(strings = {"chrome"})
     public void inLogo(String browser) {
         WebDriverFactory factory = new WebDriverFactory();
@@ -67,6 +70,7 @@ public class ProfileTest {
     }
 
     @ParameterizedTest
+    @DisplayName("Выход из личного кабинета")
     @ValueSource(strings = {"chrome"})
     public void outAccount(String browser) {
         WebDriverFactory factory = new WebDriverFactory();
