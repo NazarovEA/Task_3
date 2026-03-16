@@ -6,10 +6,12 @@ import org.example.WebDriverFactory;
 import org.junit.jupiter.api.AfterEach;
 import org.openqa.selenium.WebDriver;
 
+import static io.restassured.RestAssured.given;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class RegistrationTest {
     WebDriver driver;
+    private String accessToken;
 
     @Test
     @DisplayName("Успешная регистрация")
@@ -40,7 +42,19 @@ public class RegistrationTest {
     }
     @AfterEach
     public void tearDown() {
+        // Если токен был получен, удаляем юзера через API
+        if (accessToken != null) {
+            given()
+                    .header("Authorization", accessToken)
+                    .when()
+                    .delete("https://education-services.ru")
+                    .then()
+                    .statusCode(202); // Обычно 202 Accepted или 200 OK
+        }
+
         if (driver != null) {
             driver.quit();
-        }}
+        }
+    }
 }
+
