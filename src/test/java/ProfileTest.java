@@ -1,7 +1,6 @@
-import PageObject.HomePage;
-import PageObject.LoginPage;
-import PageObject.ProfilePage;
-import PageObject.RegisterPage;
+import pageObject.HomePage;
+import pageObject.LoginPage;
+import pageObject.ProfilePage;
 import org.example.WebDriverFactory;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -48,7 +47,7 @@ public class ProfileTest {
     public void inLogo(String browser) {
         WebDriverFactory factory = new WebDriverFactory();
         driver = factory.getWebDriver(browser);
-        driver.get("https://stellarburgers.education-services.ru");
+        driver.get(HomePage.BASE_URL);
 
 // После открытия главной страницы, заходим и вносим имя и пароль
         new HomePage(driver).clickLoginButton();
@@ -72,7 +71,7 @@ public class ProfileTest {
     public void outAccount(String browser) {
         WebDriverFactory factory = new WebDriverFactory();
         driver = factory.getWebDriver(browser);
-        driver.get("https://stellarburgers.education-services.ru");
+        driver.get(HomePage.BASE_URL);
 
 // После открытия главной страницы, заходим и вносим имя и пароль
         new HomePage(driver).clickLoginButton();

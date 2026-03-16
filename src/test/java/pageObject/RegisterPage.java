@@ -1,6 +1,5 @@
-package PageObject;
+package pageObject;
 
-import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
@@ -9,6 +8,9 @@ public class RegisterPage {
     public RegisterPage(WebDriver driver) {
         this.driver = driver;
     }
+
+    public static final String BASE_URL = "https://stellarburgers.education-services.ru/register";
+
     private final By nameField = By.xpath("//input[@name='name']");
     private final By emailField = By.xpath(".//label[text()='Email']/following-sibling::input");
     private final By passwordField = By.xpath(".//input[@name='Пароль']");

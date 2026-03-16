@@ -1,6 +1,6 @@
-import PageObject.HomePage;
-import PageObject.LoginPage;
-import PageObject.RegisterPage;
+import pageObject.HomePage;
+import pageObject.LoginPage;
+import pageObject.RegisterPage;
 import org.example.WebDriverFactory;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -22,7 +22,7 @@ public class LoginTest {
     public void loginLogYourAccount(String browser) {
         WebDriverFactory factory = new WebDriverFactory();
         driver = factory.getWebDriver(browser);
-        driver.get("https://stellarburgers.education-services.ru");
+        driver.get(HomePage.BASE_URL);
 
 // После открытия главной страницы, заходим и вносим имя и пароль
         new HomePage(driver).clickLoginButton();
@@ -44,7 +44,7 @@ public class LoginTest {
     public void loginPersonalAccountButton(String browser) {
         WebDriverFactory factory = new WebDriverFactory();
         driver = factory.getWebDriver(browser);
-        driver.get("https://stellarburgers.education-services.ru");
+        driver.get(HomePage.BASE_URL);
 
 // После открытия главной страницы, заходим и вносим имя и пароль
         new HomePage(driver).clickPersonalAccountButton();
@@ -66,7 +66,7 @@ public class LoginTest {
     public void loginRegisterButton(String browser) {
         WebDriverFactory factory = new WebDriverFactory();
         driver = factory.getWebDriver(browser);
-        driver.get("https://stellarburgers.education-services.ru/register");
+        driver.get(RegisterPage.BASE_URL);
 
 // После открытия главной страницы, заходим и вносим имя и пароль
         new RegisterPage(driver).clickRegisterButton();
@@ -89,7 +89,7 @@ public class LoginTest {
     public void loginRecoverPassword(String browser) {
         WebDriverFactory factory = new WebDriverFactory();
         driver = factory.getWebDriver(browser);
-        driver.get("https://stellarburgers.education-services.ru/login");
+        driver.get(LoginPage.BASE_URL);
 
 // После открытия главной страницы, заходим и вносим имя и пароль
         new LoginPage(driver).clickRecoverPassword();

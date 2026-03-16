@@ -1,4 +1,4 @@
-package PageObject;
+package pageObject;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -13,6 +13,8 @@ public class LoginPage {
     private final By passwordField = By.xpath(".//input[@name='Пароль']");
     private final By loginButton = By.xpath(".//button[text()='Войти']");
     private final By recoverPassword = By.xpath(".//a[text()='Восстановить пароль']");
+
+    public static final String BASE_URL = "https://stellarburgers.education-services.ru/login";
 
 
     public void clickRecoverPassword() {

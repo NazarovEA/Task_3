@@ -1,4 +1,4 @@
-package PageObject;
+package pageObject;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -10,6 +10,9 @@ import java.time.Duration;
 
 public class HomePage {
     private WebDriver driver;
+
+    public static final String BASE_URL = "https://stellarburgers.education-services.ru";
+
     // Кнопка "Войти в аккаунт"
     private final By loginButtonMain = By.xpath(".//button[text()='Войти в аккаунт']");
     // Кнопка "Личный кабинет"
