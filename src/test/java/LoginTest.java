@@ -21,8 +21,8 @@ public class LoginTest {
     private User user;
 
     @BeforeEach
-    public void setUp(){
-        user = new User("Evgeny", "evgen" + System.currentTimeMillis() + "@ya.ru", "012345");
+    public void setUp() {
+        user = new User("Evgeny", "evgen" + System.currentTimeMillis() + "@ya.ru", "Naz35514");
         String browser = System.getProperty("browser", "chrome");
         WebDriverFactory factory = new WebDriverFactory();
         driver = factory.getWebDriver(browser);
@@ -32,7 +32,6 @@ public class LoginTest {
     @DisplayName("вход по кнопке «Войти в аккаунт» на главной")
     public void loginLogYourAccount() {
         driver.get(RegisterPage.BASE_URL);
-
         RegisterPage registerPage = new RegisterPage(driver);
         registerPage.register("Evgeny", user.getEmail(), user.getPassword());
 
@@ -45,33 +44,17 @@ public class LoginTest {
         accessToken = response.path("accessToken");
 
         LoginPage loginPage = new LoginPage(driver);
-        // Используем объект homePage вместо создания нового через new HomePage(driver)
         HomePage homePage = new HomePage(driver);
-        //homePage.clickLoginButton();
+
+        driver.get(HomePage.BASE_URL);
+        homePage.clickLoginButton();
 
         loginPage.waitForLoad();
         loginPage.login(user.getEmail(), user.getPassword());
 
         homePage.waitForOrderButton();
-        assertTrue(homePage.isOrderButtonDisplayed());
-}
-
-    @Test
-    @DisplayName("вход по кнопке «Войти в аккаунт» на главной")
-    public void loginLogYourAccount2() {
-        driver.get(HomePage.BASE_URL);
-
-        LoginPage loginPage = new LoginPage(driver);
-        HomePage homePage = new HomePage(driver);
-        new HomePage(driver).clickLoginButton();
-        loginPage.waitForLoad();
-        loginPage.login(user.getEmail(), user.getPassword()); // Логинимся
-        //добавляем ожидание, так как не успевает страница открыться
-
-        homePage.waitForOrderButton();
-                assertTrue(homePage.isOrderButtonDisplayed(), "Кнопка 'Оформить заказ' не появилась!");
+        assertTrue(homePage.isOrderButtonDisplayed(), "Кнопка 'Оформить заказ' не появилась!");
     }
-
 
     @Test
     @DisplayName("вход через личный кабинет")
@@ -131,11 +114,29 @@ public class LoginTest {
         LoginPage loginPage = new LoginPage(driver);
         loginPage.waitForLoad();
         // Переходим на логин
-
+        //loginPage.login(user.getEmail(), user.getPassword());
         loginPage.login("evgen88@ya.ru", "123456"); // Логинимся
         //добавляем ожидание, так как не успевает страница открыться
         homePage.waitForOrderButton();
         assertTrue(homePage.isOrderButtonDisplayed(), "Кнопка 'Оформить заказ' не появилась!");
 
+    }
 
-    }}
+
+    @AfterEach
+    public void tearDown() {
+        // Удаляем пользователя только если есть токен
+        if (accessToken != null) {
+            given()
+                    .header("Authorization", accessToken)
+                    .when()
+                    .delete("https://stellarburgers.education-services.ru/api/auth/user")
+                    .then()
+                    .statusCode(202);
+        }
+
+        if (driver != null) {
+            driver.quit();
+        }
+    }
+}

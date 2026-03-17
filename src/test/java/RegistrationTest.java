@@ -17,8 +17,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class RegistrationTest {
     WebDriver driver;
     private String accessToken;
+    private User user;
 
-private User user;
     @BeforeEach
     public void setUp(){
         user = new User("Evgeny", "evgen" + System.currentTimeMillis() + "@ya.ru", "012345");

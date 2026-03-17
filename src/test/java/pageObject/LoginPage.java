@@ -28,8 +28,8 @@ public class LoginPage {
 
     @Step("Ожидание загрузки страницы логина")
     public void waitForLoad() {
-        new WebDriverWait(driver, Duration.ofSeconds(10))
-                .until(ExpectedConditions.visibilityOfElementLocated(emailInputField));
+        new WebDriverWait(driver, Duration.ofSeconds(20))
+                .until(ExpectedConditions.visibilityOfElementLocated(loginButton));
     }
 
 
@@ -41,8 +41,8 @@ public class LoginPage {
     }
 
     public void login(String email, String password) {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(emailField)).sendKeys(email);
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(emailInputField)).sendKeys(email);
         driver.findElement(passwordField).sendKeys(password);
         wait.until(ExpectedConditions.elementToBeClickable(loginButton)).click();
     }

@@ -28,7 +28,7 @@ private final By buns = By.xpath(".//span[text()='Булки']/parent::div");
 //кнопка оформить заказ
 private final By orderButton = By.xpath(".//button[text()='Оформить заказ']");
     public void waitForOrderButton() {
-        new WebDriverWait(driver, Duration.ofSeconds(10))
+        new WebDriverWait(driver, Duration.ofSeconds(20))
                 .until(ExpectedConditions.visibilityOfElementLocated(orderButton));
     }
     @Step("Проверить, отображается ли кнопка 'Оформить заказ'")
@@ -57,12 +57,17 @@ private final By orderButton = By.xpath(".//button[text()='Оформить за
     }
 
     public void clickLoginButton() {
-        driver.findElement(loginButtonMain).click();
+        new WebDriverWait(driver, Duration.ofSeconds(10))
+                .until(ExpectedConditions.elementToBeClickable(loginButtonMain))
+                .click();
     }
 
-    public void clickPersonalAccountButton() {
-        driver.findElement(personalAccountButton).click();
-    }
+                @Step("Клик на кнопку 'Личный кабинет'")
+        public void clickPersonalAccountButton() {
+            new WebDriverWait(driver, Duration.ofSeconds(10))
+                    .until(ExpectedConditions.elementToBeClickable(personalAccountButton))
+                    .click();
+        }
 
     public void clickLogo() {
         new WebDriverWait(driver, Duration.ofSeconds(10))
