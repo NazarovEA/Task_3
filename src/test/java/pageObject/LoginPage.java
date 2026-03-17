@@ -12,7 +12,7 @@ public class LoginPage {
     private final WebDriver driver;
     private final By emailField = By.xpath(".//input[@name='name']");
     private final By passwordField = By.xpath(".//input[@name='Пароль']");
-
+    //private final By passwordField = By.xpath(".//input[@type='password']");
     private final By loginButton = By.xpath(".//button[text()='Войти']");
     @Step("Проверить, отображается ли кнопка 'Войти'")
         public boolean isLoginButtonDisplayed() {
