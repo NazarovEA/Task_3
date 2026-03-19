@@ -1,16 +1,11 @@
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import pageObject.HomePage;
-import pageObject.LoginPage;
-import pageObject.ProfilePage;
+import pageobject.HomePage;
+import pageobject.LoginPage;
+import pageobject.ProfilePage;
 import org.example.WebDriverFactory;
 import org.junit.jupiter.api.AfterEach;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
-import java.time.Duration;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 

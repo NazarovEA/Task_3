@@ -1,7 +1,7 @@
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import pageObject.HomePage;
-import pageObject.LoginPage;
+import pageobject.HomePage;
+import pageobject.LoginPage;
 import org.example.WebDriverFactory;
 import org.junit.jupiter.api.AfterEach;
 import org.openqa.selenium.WebDriver;
