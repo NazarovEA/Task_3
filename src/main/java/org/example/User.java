@@ -10,7 +10,11 @@ public class User {
         this.email = email;
         this.password = password;
     }
-    // Геттеры и сеттеры (или используй Lombok @Data)
+
     public String getEmail() { return email; }
     public String getPassword() { return password; }
+
+    public String getName() {
+        return name;
+    }
 }

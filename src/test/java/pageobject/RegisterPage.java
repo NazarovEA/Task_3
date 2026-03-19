@@ -2,6 +2,10 @@ package pageobject;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
 
 public class RegisterPage {
     private WebDriver driver;
@@ -16,8 +20,8 @@ public class RegisterPage {
     private final By passwordField = By.xpath(".//input[@name='Пароль']");
     private final By registerButton = By.xpath(".//button[text()='Зарегистрироваться']");
     private final By passwordNotCorrect = By.xpath(".//p[text()='Некорректный пароль']");
-    private final By loginButton = By.xpath(".//a[text()='Войти']");
-
+    //private final By loginButton = By.xpath(".//a[text()='Войти']");
+    private final By loginButton = By.xpath("//a[@href='/login']");
 public void register(String name, String email, String password){
     driver.findElement(nameField).sendKeys(name);
     driver.findElement(emailField).sendKeys(email);
@@ -29,7 +33,10 @@ public void register(String name, String email, String password){
         driver.findElement(registerButton).click();
     }
     public void clickLoginButton() {
-        driver.findElement(loginButton).click();
+        By loginLink = By.xpath("//a[@href='/login']");
+        new WebDriverWait(driver, Duration.ofSeconds(10))
+                .until(ExpectedConditions.visibilityOfElementLocated(loginLink))
+                .click();
     }
     public boolean passwordErrorMessage() {
         return driver.findElement(passwordNotCorrect).isDisplayed();

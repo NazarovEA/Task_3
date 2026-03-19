@@ -28,7 +28,7 @@ private final By buns = By.xpath(".//span[text()='Булки']/parent::div");
 //кнопка оформить заказ
 private final By orderButton = By.xpath(".//button[text()='Оформить заказ']");
     public void waitForOrderButton() {
-        new WebDriverWait(driver, Duration.ofSeconds(20))
+        new WebDriverWait(driver, Duration.ofSeconds(10))
                 .until(ExpectedConditions.visibilityOfElementLocated(orderButton));
     }
     @Step("Проверить, отображается ли кнопка 'Оформить заказ'")

@@ -14,12 +14,21 @@ public class LoginPage {
     private final By passwordField = By.xpath(".//input[@name='Пароль']");
     //private final By passwordField = By.xpath(".//input[@type='password']");
     private final By loginButton = By.xpath(".//button[text()='Войти']");
+    private final By registerButton = By.xpath("//a[@href='/register']");
+
+    @Step("Кнопка зарегестрироваться на странице логин,Вы — новый пользователь?")
+    public void clickRegisterButton() {
+        new WebDriverWait(driver, Duration.ofSeconds(5))
+                .until(ExpectedConditions.elementToBeClickable(registerButton))
+                .click();
+    }
     @Step("Проверить, отображается ли кнопка 'Войти'")
         public boolean isLoginButtonDisplayed() {
         return new WebDriverWait(driver, Duration.ofSeconds(10))
                 .until(ExpectedConditions.visibilityOfElementLocated(loginButton))
                 .isDisplayed();}
-    private final By recoverPassword = By.xpath(".//a[text()='Восстановить пароль']");
+
+        private final By recoverPassword = By.xpath(".//a[text()='Восстановить пароль']");
 
     public static final String BASE_URL = "https://stellarburgers.education-services.ru/login";
 
@@ -28,7 +37,7 @@ public class LoginPage {
 
     @Step("Ожидание загрузки страницы логина")
     public void waitForLoad() {
-        new WebDriverWait(driver, Duration.ofSeconds(20))
+        new WebDriverWait(driver, Duration.ofSeconds(10))
                 .until(ExpectedConditions.visibilityOfElementLocated(loginButton));
     }
 
@@ -40,10 +49,20 @@ public class LoginPage {
         this.driver = driver;
     }
 
+    @Step("Вводим данные для аторизации и нажимаем кнопку войти")
     public void login(String email, String password) {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         wait.until(ExpectedConditions.visibilityOfElementLocated(emailInputField)).sendKeys(email);
         driver.findElement(passwordField).sendKeys(password);
-        wait.until(ExpectedConditions.elementToBeClickable(loginButton)).click();
+        //wait.until(ExpectedConditions.elementToBeClickable(
+        driver.findElement(loginButton).click();
+    }
+
+    private final By forgotPasswordLink = By.xpath("//a[@href='/forgot-password']");
+
+    public void clickForgotPasswordButton() {
+        new WebDriverWait(driver, Duration.ofSeconds(5))
+                .until(ExpectedConditions.elementToBeClickable(forgotPasswordLink))
+                .click();
     }
 }
