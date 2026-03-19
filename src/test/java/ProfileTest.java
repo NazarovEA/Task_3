@@ -1,3 +1,6 @@
+import io.restassured.response.Response;
+import org.example.User;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import pageobject.HomePage;
@@ -6,84 +9,77 @@ import pageobject.ProfilePage;
 import org.example.WebDriverFactory;
 import org.junit.jupiter.api.AfterEach;
 import org.openqa.selenium.WebDriver;
+import pageobject.RegisterPage;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ProfileTest {
     WebDriver driver;
-    WebDriverFactory factory = new WebDriverFactory();
+    private String accessToken;
+    private User user;
+    UserApiSteps userApiSteps = new UserApiSteps();
+    LoginPage loginPage;
+    HomePage homePage;
+    RegisterPage registerPage;
+ProfilePage profilePage;
+    @BeforeEach
+    public void setUp() {
+        //Создаем пользователя
+        user = new User("Evgeny", "evgen" + System.currentTimeMillis() + "@ya.ru", "Naz35514");
+        String browser = System.getProperty("browser", "chrome");
+        WebDriverFactory factory = new WebDriverFactory();
+        driver = factory.getWebDriver(browser);
+        loginPage = new LoginPage(driver);
+        homePage = new HomePage(driver);
+        profilePage = new ProfilePage(driver);
+        Response response = userApiSteps.userCreate(user);
+        accessToken = response.path("accessToken");
+        driver.get(HomePage.BASE_URL);
+    }
 
     @Test
     @DisplayName("Переход в конструктор из ЛК через кнопку Конструктор")
     public void inConstructor() {
-        String browser = System.getProperty("browser", "chrome");
-        WebDriverFactory factory = new WebDriverFactory();
-        driver = factory.getWebDriver(browser);
-        driver.get(HomePage.BASE_URL);
-
 // После открытия главной страницы, заходим и вносим имя и пароль
-        new HomePage(driver).clickLoginButton();
-        HomePage homePage = new HomePage(driver);
-        LoginPage loginPage = new LoginPage(driver);
+        homePage.clickLoginButton();
         loginPage.waitForLoad();
-        // Переходим на логин
+        loginPage.login(user.getEmail(), user.getPassword());
 
-        loginPage.login("evgen881@ya.ru", "NazarovYandex355"); // Логинимся
+        homePage.clickPersonalAccountButton();
+        profilePage.clickConstructorButton();
 
-        new HomePage(driver).clickPersonalAccountButton();
-        new ProfilePage(driver).clickConstructorButton();
-
-        assertTrue(homePage.isOrderButtonDisplayed(), "Не удалось перейти в конструктор!");
+      assertTrue(homePage.isOrderButtonDisplayed(), "Не удалось перейти в конструктор!");
     }
 
     @Test
     @DisplayName("Переход в конструктор из ЛК через логотип")
     public void inLogo() {
-        String browser = System.getProperty("browser", "chrome");
-        WebDriverFactory factory = new WebDriverFactory();
-        driver = factory.getWebDriver(browser);
-        driver.get(HomePage.BASE_URL);
-
-// После открытия главной страницы, заходим и вносим имя и пароль
-        new HomePage(driver).clickLoginButton();
-
-        HomePage homePage = new HomePage(driver);
-        LoginPage loginPage = new LoginPage(driver);
+        homePage.clickLoginButton();
         loginPage.waitForLoad();
-        // Переходим на логин
-        loginPage.login("evgen881@ya.ru", "NazarovYandex355"); // Логинимся
+        loginPage.login(user.getEmail(), user.getPassword());
 
-        new HomePage(driver).clickPersonalAccountButton();
-        new HomePage(driver).clickLogo();
+        homePage.clickPersonalAccountButton();
+        homePage.clickLogo();
         assertTrue(homePage.isOrderButtonDisplayed(), "Не удалось перейти в конструктор!");
     }
 
     @Test
     @DisplayName("Выход из личного кабинета")
     public void outAccount() {
-        String browser = System.getProperty("browser", "chrome");
-        WebDriverFactory factory = new WebDriverFactory();
-        driver = factory.getWebDriver(browser);
-        driver.get(HomePage.BASE_URL);
+        homePage.clickLoginButton();
+        loginPage.waitForLoad();
+        loginPage.login(user.getEmail(), user.getPassword());
 
-// После открытия главной страницы, заходим и вносим имя и пароль
-        new HomePage(driver).clickLoginButton();
-        HomePage homePage = new HomePage(driver);
-        LoginPage loginPage = new LoginPage(driver);
-        // Переходим на логин
-
-        loginPage.login("evgen881@ya.ru", "NazarovYandex355"); // Логинимся
-
-        new HomePage(driver).clickPersonalAccountButton();
-        new ProfilePage(driver).clickOutAccountButton();
-
+        homePage.clickPersonalAccountButton();
+        profilePage.clickOutAccountButton();
         boolean isLoggedOut = loginPage.isLoginButtonDisplayed();
-
         assertTrue(isLoggedOut, "После выхода не открылась страница входа!");
     }
     @AfterEach
     public void tearDown() {
+        userApiSteps.userDelete(accessToken);
         if (driver != null) {
             driver.quit();
-        }}
+        }
+    }
 }
