@@ -22,13 +22,14 @@ public class ProfileTest {
     HomePage homePage;
     RegisterPage registerPage;
 ProfilePage profilePage;
+
     @BeforeEach
     public void setUp() {
         //Создаем пользователя
         user = new User("Evgeny", "evgen" + System.currentTimeMillis() + "@ya.ru", "Naz35514");
         String browser = System.getProperty("browser", "chrome");
         WebDriverFactory factory = new WebDriverFactory();
-        driver = factory.getWebDriver(browser);
+        driver = WebDriverFactory.getWebDriver(browser);
         loginPage = new LoginPage(driver);
         homePage = new HomePage(driver);
         profilePage = new ProfilePage(driver);

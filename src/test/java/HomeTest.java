@@ -16,7 +16,7 @@ public class HomeTest {
     public void setUp() {
         String browser = System.getProperty("browser", "chrome");
         WebDriverFactory factory = new WebDriverFactory();
-        driver = factory.getWebDriver(browser);
+        driver = WebDriverFactory.getWebDriver(browser);
         driver.get(HomePage.BASE_URL);
         homePage = new HomePage(driver);
     }

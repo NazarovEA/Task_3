@@ -8,7 +8,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 
 public class ProfilePage {
-    private WebDriver driver;
+    private final WebDriver driver;
 
     // Кнопка "Конструктор"
     private final By constructorButton = By.xpath(".//p[text()='Конструктор']");

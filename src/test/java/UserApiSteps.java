@@ -8,7 +8,7 @@ import static io.restassured.RestAssured.given;
 public class UserApiSteps {
     private static final String BASE_URL = "https://stellarburgers.education-services.ru";
 
-    @Step("Создание user")
+    @Step("Создание пользователя")
     public Response userCreate(User user) {
        return given()
                 .log().all()
@@ -20,7 +20,7 @@ public class UserApiSteps {
                 .log().all()
                 .extract().response();
     }
-    @Step("Удаление user")
+    @Step("Удаление пользователя")
     public void userDelete(String token) {
         given()
                 .log().all()
@@ -28,10 +28,18 @@ public class UserApiSteps {
                 .header("Authorization", token)
                 .contentType(ContentType.JSON)
                 .when()
-                .delete("https://stellarburgers.education-services.ru/api/auth/user")
+                .delete(BASE_URL + "/api/auth/user")
                 .then()
-                //.statusCode(202);
+                .statusCode(202)
                 .log().all()
                 .extract().response();
+    }
+
+    @Step("Логин пользователем")
+    public Response userLogin(User user) {
+        return given()
+                .header("Content-type", "application/json")
+                .body(user)
+                .post(BASE_URL + "/api/auth/login");
     }
 }

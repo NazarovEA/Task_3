@@ -11,7 +11,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 
 public class HomePage {
-    private WebDriver driver;
+    private final WebDriver driver;
 
     public static final String BASE_URL = "https://stellarburgers.education-services.ru";
 
@@ -27,10 +27,7 @@ private final By logo = By.xpath(".//header//a[@href='/']");
 private final By buns = By.xpath(".//span[text()='Булки']/parent::div");
 //кнопка оформить заказ
 private final By orderButton = By.xpath(".//button[text()='Оформить заказ']");
-    public void waitForOrderButton() {
-        new WebDriverWait(driver, Duration.ofSeconds(10))
-                .until(ExpectedConditions.visibilityOfElementLocated(orderButton));
-    }
+
     @Step("Проверить, отображается ли кнопка 'Оформить заказ'")
     public boolean isOrderButtonDisplayed() {
         try {
@@ -52,17 +49,13 @@ private final By orderButton = By.xpath(".//button[text()='Оформить за
         this.driver = driver;
     }
 
-    public void clickСonstructorButton() {
-        driver.findElement(constructorButton).click();
-    }
-
-    public void clickLoginButton() {
+        public void clickLoginButton() {
         new WebDriverWait(driver, Duration.ofSeconds(10))
                 .until(ExpectedConditions.elementToBeClickable(loginButtonMain))
                 .click();
     }
 
-                @Step("Клик на кнопку 'Личный кабинет'")
+    @Step("Клик на кнопку 'Личный кабинет'")
         public void clickPersonalAccountButton() {
             new WebDriverWait(driver, Duration.ofSeconds(10))
                     .until(ExpectedConditions.elementToBeClickable(personalAccountButton))
@@ -88,8 +81,6 @@ private final By orderButton = By.xpath(".//button[text()='Оформить за
     }
 
     public boolean fillingsTabActive() {
-        // Находим тот же локатор fillings
-        // и проверяем его CSS-класс
         String className = driver.findElement(fillings).getAttribute("class");
         return className.contains("tab_tab_type_current");
     }

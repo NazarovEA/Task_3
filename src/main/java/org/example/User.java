@@ -1,9 +1,9 @@
 package org.example;
 
 public class User {
-    private String email;
-    private String password;
-    private String name;
+    private final String email;
+    private final String password;
+    private final String name;
 
     public User(String name, String email, String password) {
         this.name = name;

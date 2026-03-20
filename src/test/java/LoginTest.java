@@ -30,7 +30,7 @@ public class LoginTest {
         //Запускаем браузер
         String browser = System.getProperty("browser", "chrome");
         WebDriverFactory factory = new WebDriverFactory();
-        driver = factory.getWebDriver(browser);
+        driver = WebDriverFactory.getWebDriver(browser);
         //Это инициализация объектов страниц (паттерн Page Object)
         loginPage = new LoginPage(driver);
         homePage = new HomePage(driver);
